@@ -8,8 +8,6 @@ def download_and_sample(dataset_name, split, sample_size, output_path, seed=42):
     print(f"Downloading {dataset_name} ({split})...")
     try:
         if dataset_name == "cais/mmlu":
-            # For MMLU, we only want CS-related subjects:
-            # college_computer_science, computer_science, high_school_computer_science
             cs_subjects = ["college_computer_science", "computer_science", "high_school_computer_science"]
             datasets_list = []
             for subj in cs_subjects:
@@ -33,7 +31,6 @@ def download_and_sample(dataset_name, split, sample_size, output_path, seed=42):
             print(f"Sampling {sample_size} samples...")
             dataset = dataset.shuffle(seed=seed).select(range(sample_size))
         
-        # Save to output_path as jsonl
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, 'w', encoding='utf-8') as f:
             for item in tqdm(dataset, desc=f"Saving {os.path.basename(output_path)}"):
@@ -52,27 +49,23 @@ def main():
     args = parser.parse_args()
     
     datasets_to_download = [
-        # Layer 1
         ("garage-bAInd/Open-Platypus", "train", None, "open_platypus.jsonl"),
         ("HuggingFaceH4/no_robots", "train", None, "no_robots.jsonl"),
         ("Open-Orca/SlimOrca", "train", 25000, "slim_orca.jsonl"),
         ("LDJnr/Capybara", "train", 10000, "capybara.jsonl"),
         
-        # Layer 2A: Math
         ("nvidia/OpenMathInstruct-2", "train", 50000, "open_math_instruct.jsonl"),
         ("meta-math/MetaMathQA", "train", 25000, "meta_math_qa.jsonl"),
         ("TIGER-Lab/MathInstruct", "train", 15000, "math_instruct.jsonl"),
         ("microsoft/orca-math-word-problems-200k", "train", 10000, "orca_math.jsonl"),
         ("hendrycks/competition_math", "train", None, "competition_math.jsonl"),
         
-        # Layer 2B: Code
         ("ise-uiuc/Magicoder-Evol-Instruct-110K", "train", 50000, "magicoder_evol.jsonl"),
         ("sahil2801/CodeAlpaca-20k", "train", None, "code_alpaca.jsonl"),
         ("glaiveai/glaive-code-assistant-v3", "train", 20000, "glaive_code.jsonl"),
         ("deepmind/code_contests", "train", 10000, "code_contests.jsonl"),
         ("bigcode/self-oss-instruct-sc2-exec-filter-50k", "train", 10000, "self_oss_instruct.jsonl"),
         
-        # Layer 3: Domain
         ("allenai/sciq", "train", None, "sciq.jsonl"),
         ("derek-thomas/ScienceQA", "train", None, "science_qa.jsonl"),
         ("allenai/qasper", "train", None, "qasper.jsonl"),

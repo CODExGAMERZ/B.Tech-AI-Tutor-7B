@@ -6,7 +6,6 @@ import random
 from tqdm import tqdm
 import google.generativeai as genai
 
-# Define all curriculum subjects and detailed topics
 CURRICULUM = {
     "cs_fundamentals": {
         "Operating Systems": [
@@ -341,19 +340,15 @@ def main():
     parser.add_argument("--num_samples", type=int, default=100, help="Number of samples to generate")
     args = parser.parse_args()
 
-    # Configure Gemini API
     genai.configure(api_key=args.api_key)
-    # Using gemini-2.0-flash as the fast, cheap, high-quality model
     model = genai.GenerativeModel("gemini-2.0-flash", generation_config={"response_mime_type": "application/json"})
 
-    # Setup curriculum items
     category_data = CURRICULUM[args.dataset_type]
     all_pairs = []
     for subject, topics in category_data.items():
         for topic in topics:
             all_pairs.append((subject, topic))
 
-    # Read existing progress if any
     existing_samples = []
     if os.path.exists(args.output_file):
         with open(args.output_file, 'r', encoding='utf-8') as f:
@@ -370,18 +365,15 @@ def main():
         print("Required samples already generated.")
         return
 
-    # Randomly shuffle items to generate broad coverage
     random.seed(42)
     random.shuffle(all_pairs)
 
-    # Open output file in append mode
     os.makedirs(os.path.dirname(args.output_file), exist_ok=True)
     with open(args.output_file, 'a', encoding='utf-8') as f:
         pbar = tqdm(total=args.num_samples, initial=start_idx, desc=f"Generating {args.dataset_type}")
         
         generated_count = start_idx
         while generated_count < args.num_samples:
-            # Select subject and topic
             subject, topic = all_pairs[generated_count % len(all_pairs)]
             
             prompt_template = PROMPTS[args.dataset_type]
@@ -396,7 +388,6 @@ def main():
                 response = model.generate_content(prompt)
                 cleaned_text = clean_json_string(response.text)
                 
-                # Verify JSON structure
                 data = json.loads(cleaned_text)
                 if "instruction" in data and "output" in data:
                     f.write(json.dumps(data) + '\n')

@@ -21,7 +21,6 @@ def filter_dataset(input_file, output_file, threshold=0.8):
     too_short = 0
     duplicates = 0
     
-    # Read input file lines
     with open(input_file, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         
@@ -38,7 +37,6 @@ def filter_dataset(input_file, output_file, threshold=0.8):
                 malformed += 1
                 continue
                 
-            # Basic validation
             if 'instruction' not in sample or 'output' not in sample:
                 malformed += 1
                 continue
@@ -46,24 +44,20 @@ def filter_dataset(input_file, output_file, threshold=0.8):
             instruction = sample['instruction'].strip()
             output = sample['output'].strip()
             
-            # Length validation
             if len(instruction) < 20 or len(output) < 100:
                 too_short += 1
                 continue
                 
-            # Create MinHash
             m = MinHash(num_perm=128)
             norm_text = clean_normalize(output)
             for word in norm_text.split():
                 m.update(word.encode('utf-8'))
                 
-            # Check for duplicates using LSH
             dups = lsh.query(m)
             if dups:
                 duplicates += 1
                 continue
                 
-            # Insert and save
             lsh.insert(f"doc_{idx}", m)
             out_f.write(json.dumps({"instruction": instruction, "output": output}) + '\n')
             total_kept += 1
@@ -89,7 +83,6 @@ def main():
     
     os.makedirs(args.output_dir, exist_ok=True)
     
-    # Process all files in input_dir
     files = [f for f in os.listdir(args.input_dir) if f.endswith(".jsonl")]
     
     grand_total_seen = 0

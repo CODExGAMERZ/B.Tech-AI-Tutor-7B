@@ -6,7 +6,6 @@ import random
 from tqdm import tqdm
 import google.generativeai as genai
 
-# Curriculum sample topics for DPO generation
 TOPICS = [
     ("Operating Systems", "Process synchronization using Semaphores"),
     ("Operating Systems", "Deadlock detection and Banker's algorithm"),
@@ -94,7 +93,6 @@ def main():
                 response = model.generate_content(prompt)
                 cleaned = clean_json_string(response.text)
                 
-                # Verify schema
                 data = json.loads(cleaned)
                 if "prompt" in data and "chosen" in data and "rejected" in data:
                     f.write(json.dumps(data) + '\n')
