@@ -1,0 +1,17 @@
+unsloth
+trl
+transformers
+datasets
+peft
+bitsandbytes
+accelerate
+wandb
+huggingface_hub
+google-generativeai
+datasketch
+tqdm
+pandas
+numpy
+jinja2
+scipy
+scikit-learn
