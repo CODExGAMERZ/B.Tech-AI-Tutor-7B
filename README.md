@@ -43,8 +43,8 @@ The easiest way to run the tutor model locally on your laptop is using [Ollama](
 3. Place the GGUF file in your project directory and create a `Modelfile` (see `configs/Modelfile`).
 4. **Build and run** the model:
    ```bash
-   ollama create btech-ai-tutor -f configs/Modelfile
-   ollama run btech-ai-tutor
+   ollama create B.Tech-AI-Tutor-7B -f configs/Modelfile
+   ollama run B.Tech-AI-Tutor-7B
    ```
 
 ---

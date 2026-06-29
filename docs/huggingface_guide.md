@@ -40,11 +40,11 @@ You will need repositories on HuggingFace to store your custom datasets and your
 ### Option A: Create via Website (Easiest)
 1. To create a model repo: Go to [huggingface.co/new](https://huggingface.co/new).
    - Set **Owner** to your username.
-   - Set **Model name** (e.g. `btech-ai-tutor-7b-GGUF` or `btech-ai-tutor-7b-adapters`).
+   - Set **Model name** (e.g. `B.Tech-AI-Tutor-7B-GGUF` or `B.Tech-AI-Tutor-7B-adapters`).
    - Select **Public** or **Private**.
    - Click **Create model**.
 2. To create a dataset repo: Go to [huggingface.co/new-dataset](https://huggingface.co/new-dataset).
-   - Set **Dataset name** (e.g. `btech-ai-tutor-custom-data`).
+   - Set **Dataset name** (e.g. `B.Tech-AI-Tutor-7B-custom-data`).
    - Click **Create dataset**.
 
 ### Option B: Create Programmatically (in Python)
@@ -55,7 +55,7 @@ api = HfApi()
 
 # Create model repo
 api.create_repo(
-    repo_id="YOUR_USERNAME/btech-ai-tutor-7b-GGUF",
+    repo_id="YOUR_USERNAME/B.Tech-AI-Tutor-7B-GGUF",
     repo_type="model",
     exist_ok=True
 )
@@ -72,7 +72,7 @@ from datasets import load_dataset
 # Load from local JSONL
 dataset = load_dataset("json", data_files="data/processed/phase1_train.jsonl")
 # Push directly to HuggingFace Datasets hub
-dataset.push_to_hub("YOUR_USERNAME/btech-ai-tutor-dataset")
+dataset.push_to_hub("YOUR_USERNAME/B.Tech-AI-Tutor-7B-dataset")
 ```
 
 ### 2. Uploading adapters during training (Automatic checkpointers)
@@ -81,7 +81,7 @@ In notebooks `02_phase1_sft.ipynb` and `03_phase2_sft.ipynb`, we set up `push_to
 training_args = TrainingArguments(
     output_dir="./checkpoints",
     push_to_hub=True,
-    hub_model_id="YOUR_USERNAME/btech-ai-tutor-7b-adapter",
+    hub_model_id="YOUR_USERNAME/B.Tech-AI-Tutor-7B-adapter",
     hub_strategy="checkpoint",
     # ... other args
 )
@@ -94,8 +94,8 @@ from huggingface_hub import HfApi
 api = HfApi()
 
 api.upload_folder(
-    folder_path="/content/drive/MyDrive/btech-ai-tutor/models/gguf_q4",
-    repo_id="YOUR_USERNAME/btech-ai-tutor-7b-GGUF",
+    folder_path="/content/drive/MyDrive/B.Tech-AI-Tutor-7B/models/gguf_q4",
+    repo_id="YOUR_USERNAME/B.Tech-AI-Tutor-7B-GGUF",
     path_in_repo="q4_k_m"
 )
 ```

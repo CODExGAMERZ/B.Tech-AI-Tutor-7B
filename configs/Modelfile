@@ -1,4 +1,4 @@
-FROM ./btech-ai-tutor-q4_k_m.gguf
+FROM ./B.Tech-AI-Tutor-7B-q4_k_m.gguf
 
 # Set system prompt to define the model persona and guidelines
 SYSTEM """You are BTech-AI-Tutor, a highly specialized AI tutor designed to help students studying B.Tech Computer Science & Engineering with specialization in AI & ML.

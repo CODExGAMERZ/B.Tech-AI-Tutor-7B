@@ -12,22 +12,22 @@ Ollama is the easiest tool for local execution as it automatically manages CPU/G
 Download and install Ollama from [ollama.com](https://ollama.com).
 
 ### Step 2: Download GGUF Files
-Download the GGUF model files (e.g. `btech-ai-tutor-q4_k_m.gguf`) from your HuggingFace repository or Google Drive, and place it in a known folder.
+Download the GGUF model files (e.g. `B.Tech-AI-Tutor-7B-q4_k_m.gguf`) from your HuggingFace repository or Google Drive, and place it in a known folder.
 
 ### Step 3: Create a Modelfile
 In the same folder, verify your `Modelfile` (available at `configs/Modelfile`). If you downloaded the `Q3_K_M` or `Q4_K_M` file, update the `FROM` path in the Modelfile:
 ```dockerfile
-FROM ./btech-ai-tutor-q4_k_m.gguf
+FROM ./B.Tech-AI-Tutor-7B-q4_k_m.gguf
 ```
 
 ### Step 4: Build and Run the Model
 Open your terminal/command prompt and run:
 ```bash
 # Build the model in Ollama
-ollama create btech-ai-tutor -f Modelfile
+ollama create B.Tech-AI-Tutor-7B -f Modelfile
 
 # Start the interactive chat session
-ollama run btech-ai-tutor
+ollama run B.Tech-AI-Tutor-7B
 ```
 
 ---
@@ -37,7 +37,7 @@ ollama run btech-ai-tutor
 If you prefer a clean graphical user interface (GUI) with side-by-side chats, parameter sliders, and system prompt configurations:
 
 1. Download and install **LM Studio** from [lmstudio.ai](https://lmstudio.ai).
-2. Open LM Studio, click on the **Search Icon** on the left panel, and search for your HuggingFace model repo (e.g. `username/btech-ai-tutor-7b-GGUF`).
+2. Open LM Studio, click on the **Search Icon** on the left panel, and search for your HuggingFace model repo (e.g. `username/B.Tech-AI-Tutor-7B-GGUF`).
 3. Download either the `Q3_K_M` (fits entirely on 4GB VRAM) or `Q4_K_M` (recommended balance) model.
 4. Go to the **Chat** panel, select your model from the top dropdown.
 5. In the **Right Sidebar**, configure:
@@ -56,7 +56,7 @@ Using the `Q5_K_M` model on CPU guarantees maximum accuracy but yields slower in
 ```bash
 # Run with 8 CPU threads and 4096 context length
 ./llama-cli \
-    -m path/to/btech-ai-tutor-q5_k_m.gguf \
+    -m path/to/B.Tech-AI-Tutor-7B-q5_k_m.gguf \
     -ngl 0 \
     -c 4096 \
     -t 8 \
@@ -68,7 +68,7 @@ Using the `Q5_K_M` model on CPU guarantees maximum accuracy but yields slower in
 ```bash
 # Offload 15 layers to GPU, utilize 6 CPU threads
 ./llama-cli \
-    -m path/to/btech-ai-tutor-q4_k_m.gguf \
+    -m path/to/B.Tech-AI-Tutor-7B-q4_k_m.gguf \
     -ngl 15 \
     -c 4096 \
     -t 6 \
